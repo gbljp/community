@@ -10,6 +10,8 @@
 
 mybatis-plus的用法可以参考SellerController或者BuyerController或者直接看官网：https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7
 
+lombok语法，，，这个实在没什么好说的请自行百度
+
 编译方式：
 mvn clean package -e 编译后为jar文件，运行使用命令行 java -jar XXX.jar
 
