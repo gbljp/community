@@ -2,6 +2,9 @@ package com.anjoy.cloud.component.entity;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -11,6 +14,9 @@ import java.io.Serializable;
  * @author 
  * @since 2018-12-03
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class Seller implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,153 +102,4 @@ public class Seller implements Serializable {
     private String regions;
 
 
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public String getSellerAccount() {
-        return sellerAccount;
-    }
-
-    public void setSellerAccount(String sellerAccount) {
-        this.sellerAccount = sellerAccount;
-    }
-
-    public String getSellerName() {
-        return sellerName;
-    }
-
-    public void setSellerName(String sellerName) {
-        this.sellerName = sellerName;
-    }
-
-    public String getSellerAlias() {
-        return sellerAlias;
-    }
-
-    public void setSellerAlias(String sellerAlias) {
-        this.sellerAlias = sellerAlias;
-    }
-
-    public String getSellerLogo() {
-        return sellerLogo;
-    }
-
-    public void setSellerLogo(String sellerLogo) {
-        this.sellerLogo = sellerLogo;
-    }
-
-    public String getSellerLicence() {
-        return sellerLicence;
-    }
-
-    public void setSellerLicence(String sellerLicence) {
-        this.sellerLicence = sellerLicence;
-    }
-
-    public Integer getSellerRank() {
-        return sellerRank;
-    }
-
-    public void setSellerRank(Integer sellerRank) {
-        this.sellerRank = sellerRank;
-    }
-
-    public Double getSellerGrade() {
-        return sellerGrade;
-    }
-
-    public void setSellerGrade(Double sellerGrade) {
-        this.sellerGrade = sellerGrade;
-    }
-
-    public String getSellerAddress() {
-        return sellerAddress;
-    }
-
-    public void setSellerAddress(String sellerAddress) {
-        this.sellerAddress = sellerAddress;
-    }
-
-    public String getSellerKeyword() {
-        return sellerKeyword;
-    }
-
-    public void setSellerKeyword(String sellerKeyword) {
-        this.sellerKeyword = sellerKeyword;
-    }
-
-    public String getSellerTel() {
-        return sellerTel;
-    }
-
-    public void setSellerTel(String sellerTel) {
-        this.sellerTel = sellerTel;
-    }
-
-    public BigDecimal getBalanceMoney() {
-        return balanceMoney;
-    }
-
-    public void setBalanceMoney(BigDecimal balanceMoney) {
-        this.balanceMoney = balanceMoney;
-    }
-
-    public BigDecimal getBillMoney() {
-        return billMoney;
-    }
-
-    public void setBillMoney(BigDecimal billMoney) {
-        this.billMoney = billMoney;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getSellerType() {
-        return sellerType;
-    }
-
-    public void setSellerType(Integer sellerType) {
-        this.sellerType = sellerType;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    @Override
-    public String toString() {
-        return "Seller{" +
-        "sellerId=" + sellerId +
-        ", sellerAccount=" + sellerAccount +
-        ", sellerName=" + sellerName +
-        ", sellerAlias=" + sellerAlias +
-        ", sellerLogo=" + sellerLogo +
-        ", sellerLicence=" + sellerLicence +
-        ", sellerRank=" + sellerRank +
-        ", sellerGrade=" + sellerGrade +
-        ", sellerAddress=" + sellerAddress +
-        ", sellerKeyword=" + sellerKeyword +
-        ", sellerTel=" + sellerTel +
-        ", balanceMoney=" + balanceMoney +
-        ", billMoney=" + billMoney +
-        ", remark=" + remark +
-        ", sellerType=" + sellerType +
-        ", regions=" + regions +
-        "}";
-    }
 }

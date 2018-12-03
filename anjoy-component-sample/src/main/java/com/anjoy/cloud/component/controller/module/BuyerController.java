@@ -8,6 +8,9 @@ import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.BuyerService;
 import com.anjoy.cloud.component.service.SellerService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -66,6 +69,58 @@ public class BuyerController extends BaseController {
 
         logger.info("SellerController.test.account:" + ls);
         return new JsonResult(JsonResultCode.SUCCESS, account, ls);
+    }
+
+    /**
+     * 测试接口
+     * @param request
+     * @param response
+     * @return
+     */
+    @ApiOperation(value = "查询买家列表分页", tags = "查询买家列表分页", httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "买家名称", paramType = "query", dataType = "String", required = true)
+    })
+    @RequestMapping(value = "/getBuyerListAll", method = { RequestMethod.GET })
+    public JsonResult testall(HttpServletRequest request, HttpServletResponse response) {
+        String account = this.getNotNull("name", request);
+
+        IPage page = sellerService.page(new Page<Seller>(),new QueryWrapper<Seller>()
+                .like("seller_name","发"));
+
+        return new JsonResult(JsonResultCode.SUCCESS, account, page);
+    }
+
+    /**
+     * 测试接口
+     * @param request
+     * @param response
+     * @return
+     */
+    @ApiOperation(value = "更新买家信息", tags = "更新买家信息", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "买家id", paramType = "query", dataType = "String", required = true),
+            @ApiImplicitParam(name = "name", value = "买家名称", paramType = "query", dataType = "String", required = true)
+    })
+    @RequestMapping(value = "/updateBuyerInfo", method = { RequestMethod.POST })
+    public JsonResult updateinfo(HttpServletRequest request, HttpServletResponse response) {
+        String account = this.getNotNull("name", request);
+        String id = this.getNotNull("id", request);
+
+        try {
+            Seller seller = sellerService.getOne(new QueryWrapper<Seller>().eq("seller_id",id));
+            if (seller != null){
+                seller.setSellerName(account);
+                sellerService.update(seller,new UpdateWrapper<Seller>().eq("seller_id",id));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonResult(JsonResultCode.FAILURE, account, "");
+
+        }
+
+
+        return new JsonResult(JsonResultCode.SUCCESS, account, "");
     }
 
 

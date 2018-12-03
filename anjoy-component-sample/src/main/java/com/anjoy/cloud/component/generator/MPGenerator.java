@@ -20,7 +20,6 @@ public class MPGenerator {
         String packageName = "com.anjoy.cloud.component";
         boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
         generateByTables(serviceNameStartWithI, packageName, "buyer","seller");
-//        generateByTables(serviceNameStartWithI, packageName, "component","buyer");
     }
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
@@ -28,25 +27,23 @@ public class MPGenerator {
         String dbUrl = "jdbc:mysql://172.17.0.80:33016/anjoys2b_deprecated?autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig
-//                .setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
                 .setUsername("root")
                 .setPassword("Mysql@5.7")
                 .setDriverName("com.mysql.jdbc.Driver");
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
-//                .setCapitalMode(true)
-//                .setEntityLombokModel(false)
-//                .setDbColumnUnderline(true)
                 .setNaming(NamingStrategy.underline_to_camel)
+                .setColumnNaming(NamingStrategy.underline_to_camel)
                 .setInclude(tableNames)
+                .setEntityLombokModel(true)
                 .setRestControllerStyle(true);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
                 .setAuthor("")
                 .setOutputDir("d:\\codeGen")
                 .setFileOverride(true)
                 .setEnableCache(false)
-                .setBaseResultMap(true)
+                .setBaseResultMap(false)
                 .setBaseColumnList(false)
                 .setMapperName("%sDao")
                 .setXmlName("%sDao");
