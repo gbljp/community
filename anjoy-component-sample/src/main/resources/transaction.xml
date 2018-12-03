@@ -16,6 +16,11 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="check*" propagation="REQUIRED" read-only="true" />
@@ -33,7 +38,7 @@
 	<aop:config>
 		<!-- 只对业务逻辑层实施事务 -->
 		<aop:pointcut id="txPointcut"
-			expression="execution(* com.anjoy.cloud.component.service..*.*(..))" />
+			expression="execution(* com.anjoy.cloud.component.service..*.*(..)) or execution(* com.baomidou.mybatisplus.service..*.*(..))" />
 		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" order="0"/>
 	</aop:config>
