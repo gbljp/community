@@ -4,11 +4,11 @@
         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.anjoy.frozen</groupId>
+        <groupId>com.anjoy.cloud</groupId>
         <artifactId>anjoy</artifactId>
         <version>1.0</version>
     </parent>
-    <groupId>com.anjoy.frozen.seller</groupId>
+    <groupId>com.anjoy.cloud.component</groupId>
     <artifactId>anjoy-component-sample</artifactId>
     <packaging>jar</packaging>
 

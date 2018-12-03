@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 商家信息 -->
+<mapper namespace="com.anjoy.cloud.component.dao.UsersDao">
+
+	<resultMap type="com.anjoy.cloud.component.entity.Users" id="usersMap">
+		<result column="id" property="id" />
+		<result column="account" property="account" />
+		<result column="password" property="password" />
+		<result column="status" property="status" />
+		<result column="true_name" property="trueName" />
+		<result column="type" property="type" />
+		<result column="create_time" property="createTime" />
+		<result column="last_login_time" property="lastLoginTime" />
+	</resultMap>
+	
+	<resultMap type="com.anjoy.cloud.component.vo.UserVo" id="userVoMap">
+	    <result column="seller_id" property="sellerId" />
+		<result column="seller_account" property="sellerAccount" />
+		<result column="seller_name" property="sellerName" />
+		<result column="seller_alias" property="sellerAlias" />
+		<result column="seller_logo" property="sellerLogo" />
+		<result column="seller_licence" property="sellerLicence" />
+		<result column="seller_rank" property="sellerRank" />
+		<result column="seller_grade" property="grade" />
+		<result column="seller_address" property="sellerAddress" />
+		<result column="seller_keyword" property="sellerKeyword" />
+		<result column="balance_money" property="balanceMoney" />
+		<result column="bill_money" property="billMoney" />
+		<result column="regions" property="regions" />
+		<result column="password" property="password" />
+		<result column="status" property="status" />
+		<result column="seller_type" property="sellerType" />
+	</resultMap>
+	
+    <!-- 获取用户对象根据ID-->
+	<select id="getUsersById" resultMap="usersMap">
+	   SELECT * FROM users where id=#{userId}
+	</select>
+	
+	 <!-- 获取用户对象根据ID-->
+	<select id="findUserByAccount" resultMap="usersMap">
+	   SELECT * FROM users where account=#{account}
+	</select>
+
+</mapper>

@@ -33,7 +33,7 @@
 	<aop:config>
 		<!-- 只对业务逻辑层实施事务 -->
 		<aop:pointcut id="txPointcut"
-			expression="execution(* com.anjoy.frozen.seller.service..*.*(..))" />
+			expression="execution(* com.anjoy.cloud.component.service..*.*(..))" />
 		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" order="0"/>
 	</aop:config>
