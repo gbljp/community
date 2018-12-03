@@ -1,7 +1,7 @@
 package com.anjoy.cloud.component.service;
 
 import com.anjoy.cloud.component.entity.Seller;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author 
- * @since 2018-08-14
+ * @since 2018-12-03
  */
 public interface SellerService extends IService<Seller> {
 

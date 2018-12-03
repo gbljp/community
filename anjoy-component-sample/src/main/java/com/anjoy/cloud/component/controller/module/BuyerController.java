@@ -7,7 +7,7 @@ import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.BuyerService;
 import com.anjoy.cloud.component.service.SellerService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +34,7 @@ import java.util.List;
 @RequestMapping("/buyer")
 public class BuyerController extends BaseController {
 
+
     private static final Logger logger = LoggerFactory.getLogger(BuyerController.class);
 
     @Autowired
@@ -57,7 +58,7 @@ public class BuyerController extends BaseController {
     public JsonResult test(HttpServletRequest request, HttpServletResponse response) {
         String account = this.getNotNull("name", request);
 
-        List<Seller> ls = sellerService.selectList(new EntityWrapper<Seller>()
+        List<Seller> ls = sellerService.list(new QueryWrapper<Seller>()
                 .eq("seller_name", "必火酒水饮料批发")
                 .or()
                 .eq("seller_name", "清真牛羊肉"));

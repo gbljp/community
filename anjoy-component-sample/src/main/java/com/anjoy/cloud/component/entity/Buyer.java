@@ -1,8 +1,6 @@
 package com.anjoy.cloud.component.entity;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
 import java.io.Serializable;
 
 /**
@@ -11,7 +9,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 
- * @since 2018-08-15
+ * @since 2018-12-03
  */
 public class Buyer implements Serializable {
 
@@ -20,121 +18,123 @@ public class Buyer implements Serializable {
     /**
      * 来源于user表中的ID
      */
-    @TableId("buyer_id")
     private Long buyerId;
+
     /**
      * 买家名称(也就是餐馆名称)
      */
-    @TableField("buyer_name")
     private String buyerName;
+
     /**
      * 餐馆地址
      */
-    @TableField("buyer_address")
     private String buyerAddress;
+
     /**
      * 经度
      */
     private String lng;
+
     /**
      * 纬度
      */
     private String lat;
+
     /**
      * 所属省
      */
-    @TableField("province_id")
     private Integer provinceId;
+
     /**
      * 所属市
      */
-    @TableField("city_id")
     private Integer cityId;
+
     /**
      * 所属区
      */
-    @TableField("region_id")
     private Integer regionId;
+
     /**
      * 负责人
      */
-    @TableField("boss_name")
     private String bossName;
+
     /**
      * 负责人的电话号码
      */
-    @TableField("boss_tel")
     private String bossTel;
+
     /**
      * 联系人
      */
-    @TableField("contact_name")
     private String contactName;
+
     /**
      * 联系人电话号码
      */
-    @TableField("contact_tel")
     private String contactTel;
+
     /**
      * 账号余额
      */
-    @TableField("balance_money")
     private BigDecimal balanceMoney;
+
     /**
      * 客户的类型，1为火锅店，2为小餐馆，3为中餐馆，4,为烧烤
      */
-    @TableField("buyer_type")
     private Integer buyerType;
+
     /**
      * 所属销售人员
      */
-    @TableField("sale_id")
     private Long saleId;
+
     /**
      * 所属卖家
      */
-    @TableField("seller_id")
     private Long sellerId;
+
     /**
      * 备注信息
      */
     private String remark;
+
     /**
      * 买家logo图片
      */
-    @TableField("buyer_logo")
     private String buyerLogo;
+
     /**
      * 方便配送人员容易找到位置，所拍摄的多张图片
      */
-    @TableField("buyer_images")
     private String buyerImages;
+
     /**
      * 餐馆，早上开门时间
      */
-    @TableField("open_time")
     private String openTime;
+
     /**
      * 餐厅晚上关门时间
      */
-    @TableField("end_time")
     private String endTime;
+
     /**
      * 可以允许的物流最晚送达时间
      */
-    @TableField("delivery_time")
     private String deliveryTime;
-    @TableField("delivery_area_id")
+
     private Long deliveryAreaId;
+
     /**
      * 买家菜单
      */
-    @TableField("buyer_menu")
     private String buyerMenu;
+
     /**
      * 客户级别，1为A类客户,2为B类客户,3为C类客户
      */
-    @TableField("buyer_level")
     private Integer buyerLevel;
 
 
@@ -341,7 +341,7 @@ public class Buyer implements Serializable {
     @Override
     public String toString() {
         return "Buyer{" +
-        ", buyerId=" + buyerId +
+        "buyerId=" + buyerId +
         ", buyerName=" + buyerName +
         ", buyerAddress=" + buyerAddress +
         ", lng=" + lng +

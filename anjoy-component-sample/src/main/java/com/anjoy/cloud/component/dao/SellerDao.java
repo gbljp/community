@@ -1,7 +1,7 @@
 package com.anjoy.cloud.component.dao;
 
 import com.anjoy.cloud.component.entity.Seller;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author 
- * @since 2018-08-14
+ * @since 2018-12-03
  */
 public interface SellerDao extends BaseMapper<Seller> {
 

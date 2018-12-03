@@ -8,7 +8,6 @@ import com.anjoy.cloud.component.feign.client.TestFeignInterface;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.SellerService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +37,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/seller")
 public class SellerController extends BaseController {
+
 
     private static final Logger logger = LoggerFactory.getLogger(SellerController.class);
 
@@ -93,6 +93,7 @@ public class SellerController extends BaseController {
         logger.info("SellerController.test.account:" + jo.toJSONString());
         return new JsonResult(JsonResultCode.SUCCESS, jo.toJSONString(), jo);
     }
+
 
 }
 

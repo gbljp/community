@@ -1,12 +1,7 @@
 package com.anjoy.cloud.component.config;
 
 
-import com.baomidou.mybatisplus.incrementer.H2KeyGenerator;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.plugins.parser.ISqlParser;
-import com.baomidou.mybatisplus.plugins.parser.tenant.TenantHandler;
-import com.baomidou.mybatisplus.plugins.parser.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;

@@ -1,8 +1,6 @@
 package com.anjoy.cloud.component.entity;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
 import java.io.Serializable;
 
 /**
@@ -11,7 +9,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 
- * @since 2018-08-14
+ * @since 2018-12-03
  */
 public class Seller implements Serializable {
 
@@ -20,77 +18,78 @@ public class Seller implements Serializable {
     /**
      * 来源于users的ID
      */
-    @TableId("seller_id")
     private Long sellerId;
+
     /**
      * 账号,目前用手机号码作为账号
      */
-    @TableField("seller_account")
     private String sellerAccount;
+
     /**
      * 店铺名称
      */
-    @TableField("seller_name")
     private String sellerName;
+
     /**
      * 店铺别名,可以理解为简称
      */
-    @TableField("seller_alias")
     private String sellerAlias;
+
     /**
      * 店铺logo
      */
-    @TableField("seller_logo")
     private String sellerLogo;
+
     /**
      * 营业执照
      */
-    @TableField("seller_licence")
     private String sellerLicence;
+
     /**
      * 店铺评级,默认为0
      */
-    @TableField("seller_rank")
     private Integer sellerRank;
+
     /**
      * 评分
      */
-    @TableField("seller_grade")
     private Double sellerGrade;
+
     /**
      * 店铺地址
      */
-    @TableField("seller_address")
     private String sellerAddress;
+
     /**
      * 关键字
      */
-    @TableField("seller_keyword")
     private String sellerKeyword;
+
     /**
      * 手机号码
      */
-    @TableField("seller_tel")
     private String sellerTel;
+
     /**
      * 余额
      */
-    @TableField("balance_money")
     private BigDecimal balanceMoney;
+
     /**
      * 账单金额,用于提现的计算
      */
-    @TableField("bill_money")
     private BigDecimal billMoney;
+
     /**
      * 备注
      */
     private String remark;
+
     /**
      * 类型 1自营 2加盟 3合作
      */
-    @TableField("seller_type")
     private Integer sellerType;
+
     /**
      * 所属区域,多个区域用逗号进行相隔
      */
@@ -228,7 +227,7 @@ public class Seller implements Serializable {
     @Override
     public String toString() {
         return "Seller{" +
-        ", sellerId=" + sellerId +
+        "sellerId=" + sellerId +
         ", sellerAccount=" + sellerAccount +
         ", sellerName=" + sellerName +
         ", sellerAlias=" + sellerAlias +

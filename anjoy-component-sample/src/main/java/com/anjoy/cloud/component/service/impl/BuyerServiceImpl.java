@@ -1,9 +1,9 @@
 package com.anjoy.cloud.component.service.impl;
 
-import com.anjoy.cloud.component.dao.BuyerDao;
 import com.anjoy.cloud.component.entity.Buyer;
+import com.anjoy.cloud.component.dao.BuyerDao;
 import com.anjoy.cloud.component.service.BuyerService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 
- * @since 2018-08-15
+ * @since 2018-12-03
  */
 @Service
 public class BuyerServiceImpl extends ServiceImpl<BuyerDao, Buyer> implements BuyerService {
