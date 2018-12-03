@@ -2,9 +2,11 @@ package com.anjoy.cloud.component.controller.module;
 
 
 import com.anjoy.cloud.component.controller.base.BaseController;
+import com.anjoy.cloud.component.entity.Seller;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.BuyerService;
+import com.anjoy.cloud.component.service.SellerService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -37,6 +39,9 @@ public class BuyerController extends BaseController {
     @Autowired
     BuyerService buyerService;
 
+    @Autowired
+    SellerService sellerService;
+
 
     /**
      * 测试接口
@@ -52,14 +57,14 @@ public class BuyerController extends BaseController {
     public JsonResult test(HttpServletRequest request, HttpServletResponse response) {
         String account = this.getNotNull("name", request);
 
-//        List<Seller> ls = sellerService.selectList(new EntityWrapper<Seller>()
-//                .eq("seller_name", "必火酒水饮料批发")
-//                .or()
-//                .eq("seller_name", "清真牛羊肉"));
+        List<Seller> ls = sellerService.selectList(new EntityWrapper<Seller>()
+                .eq("seller_name", "必火酒水饮料批发")
+                .or()
+                .eq("seller_name", "清真牛羊肉"));
 
 
-        logger.info("SellerController.test.account:" + account);
-        return new JsonResult(JsonResultCode.SUCCESS, account, account);
+        logger.info("SellerController.test.account:" + ls);
+        return new JsonResult(JsonResultCode.SUCCESS, account, ls);
     }
 
 

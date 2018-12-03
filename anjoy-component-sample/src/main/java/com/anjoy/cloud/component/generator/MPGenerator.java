@@ -20,7 +20,7 @@ public class MPGenerator {
     public void generateCode() {
         String packageName = "com.anjoy.cloud.component";
         boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
-        generateByTables(serviceNameStartWithI, packageName, "buyer");
+        generateByTables(serviceNameStartWithI, packageName, "buyer","seller");
 //        generateByTables(serviceNameStartWithI, packageName, "component","buyer");
     }
 
