@@ -3,13 +3,12 @@ package com.anjoy.cloud.component.sms;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
 import com.anjoy.cloud.component.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-
-import net.sf.json.JSONObject;
 
 /**
  * 短信工具
@@ -60,7 +59,7 @@ public class SmsUtil {
 			
 			logger.info("SmsUtil.sendSms.responseContent:" + responseContent);
 			
-			JSONObject json = JSONObject.fromObject(responseContent);
+			JSONObject json = JSONObject.parseObject(responseContent);
 			
 			logger.info("SmsUtil.sendSms.json:" + json);
 			

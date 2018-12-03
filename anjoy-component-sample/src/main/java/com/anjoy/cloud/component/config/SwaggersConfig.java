@@ -20,25 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggersConfig {
 
-//	@Bean
-//	public Docket createRestApi() {
-//		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).enableUrlTemplating(true).select()
-//				// 扫描所有有注解的api，用这种方式更灵活
-//				.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).paths(PathSelectors.any())
-//				.build();
-//	}
-//	/**
-//     * 首页描述
-//     * @return
-//     */
-//    private ApiInfo apiInfo() {
-//        return new ApiInfoBuilder()
-//                .title("冻品鲜生为android或者ios客户端提供API请求接口")
-//                .description("")
-//                .termsOfServiceUrl("")
-//                .build();
-//    }
-
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -55,10 +36,10 @@ public class SwaggersConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("冻品鲜生-seller模块")
+				.title("安井云平台运行组件模板")
 				.description("")
 				.termsOfServiceUrl("http://")
-				.contact(new Contact("冻品鲜生","",""))
+				.contact(new Contact("吴宏宇","",""))
 				.version("1.0.0")
 				.build();
 	}

@@ -88,6 +88,8 @@ public class BuyerController extends BaseController {
         IPage page = sellerService.page(new Page<Seller>(),new QueryWrapper<Seller>()
                 .like("seller_name","发"));
 
+//        System.out.println(page);
+
         return new JsonResult(JsonResultCode.SUCCESS, account, page);
     }
 
