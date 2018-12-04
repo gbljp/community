@@ -19,4 +19,4 @@ mvn clean package -e 编译后为jar文件，运行使用命令行 java -jar XXX
 
 -----------------------------------
 架构说明:
-主体架构为：spring-cloud（Finchley.SR2） + sprint-boot（2.06） + spring + Mybatis-plus（3.06） + druid + swagger(2.0) + openfeign(Finchley整合) + rocketMQ(4.2)
+主体架构为：spring-cloud（Finchley.SR2） + sprint-boot（2.06） + spring + Mybatis-plus（3.06） + redis(jedis2.9) + druid + swagger(2.0) + openfeign(Finchley整合) + rocketMQ(4.2)

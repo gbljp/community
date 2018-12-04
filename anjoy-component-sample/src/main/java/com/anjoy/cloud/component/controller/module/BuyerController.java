@@ -3,6 +3,7 @@ package com.anjoy.cloud.component.controller.module;
 
 import com.anjoy.cloud.component.controller.base.BaseController;
 import com.anjoy.cloud.component.entity.Seller;
+import com.anjoy.cloud.component.redis.RedisCacheService;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.BuyerService;
@@ -46,6 +47,9 @@ public class BuyerController extends BaseController {
     @Autowired
     SellerService sellerService;
 
+    @Autowired
+    RedisCacheService redisCacheService;
+
 
     /**
      * 测试接口
@@ -87,6 +91,10 @@ public class BuyerController extends BaseController {
 
         IPage page = sellerService.page(new Page<Seller>(),new QueryWrapper<Seller>()
                 .like("seller_name","发"));
+
+        redisCacheService.putObject("test",page,3600);
+
+        System.out.println(redisCacheService.getObject("test"));
 
 //        System.out.println(page);
 
