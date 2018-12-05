@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler {
         JsonResult jsonResult = new JsonResult();
         jsonResult.setCode(JsonResultCode.FAILURE);
         jsonResult.setMessage("请求不存在或者异常，请重试");
+        jsonResult.setObject(ExceptionUtils.getStackTrace(e));
         return jsonResult;
     }
 }
