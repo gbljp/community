@@ -33,12 +33,14 @@ public class MPGenerator {
                 .setDriverName("com.mysql.jdbc.Driver");
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
+                .setSuperControllerClass("com.anjoy.cloud.component.controller.base.BaseController")
                 .setNaming(NamingStrategy.underline_to_camel)
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 .setInclude(tableNames)
                 .setEntityLombokModel(true)
                 .setRestControllerStyle(true);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
+                .setSwagger2(true)
                 .setAuthor("")
                 .setOutputDir("d:\\codeGen")
                 .setFileOverride(true)
