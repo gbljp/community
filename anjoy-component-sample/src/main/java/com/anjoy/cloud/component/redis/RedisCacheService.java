@@ -1,9 +1,9 @@
 package com.anjoy.cloud.component.redis;
 
-import org.mybatis.caches.redis.SerializeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SerializationUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -64,7 +64,7 @@ public class RedisCacheService {
         Jedis jedis = null;
         try {
             jedis = getJedis();
-            jedis.set(key.getBytes(), SerializeUtil.serialize(object));
+            jedis.set(key.getBytes(), SerializationUtils.serialize(object));
         } catch (Exception ex) {
             returnBrokenResource(jedis);
             throw ex;
@@ -78,7 +78,7 @@ public class RedisCacheService {
         Jedis jedis = null;
         try {
             jedis = getJedis();
-            jedis.setex(key.getBytes(), expirationInSeconds, SerializeUtil.serialize(object));
+            jedis.setex(key.getBytes(), expirationInSeconds, SerializationUtils.serialize(object));
         } catch (Exception ex) {
             returnBrokenResource(jedis);
             throw ex;
@@ -88,11 +88,11 @@ public class RedisCacheService {
     }
 
     //获取对象
-    public Object getObject(String key) {
+    public <T> T getObject(String key) {
         Jedis jedis = null;
         try {
             jedis = getJedis();
-            return (Object) SerializeUtil.unserialize(jedis.get(key.getBytes()));
+            return (T) SerializationUtils.deserialize(jedis.get(key.getBytes()));
         } catch (Exception ex) {
             returnBrokenResource(jedis);
             throw ex;
