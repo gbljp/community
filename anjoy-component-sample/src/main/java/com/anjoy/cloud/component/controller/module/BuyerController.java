@@ -94,7 +94,7 @@ public class BuyerController extends BaseController {
 
         redisCacheService.putObject("test",page,3600);
 
-        System.out.println(redisCacheService.getObject("test"));
+        System.out.println((IPage)redisCacheService.getObject("test"));
 
 //        System.out.println(page);
 
