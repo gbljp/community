@@ -48,10 +48,11 @@
         </dependency>
 
         <!--添加热部署依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
+        <!--wuhy 去掉热更，这个东西会导致在放入redis之后，再取出来的时候无法还原为原来的类，参考 https://chenzhihao.cc/archives/526-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--</dependency>-->
 
         <!-- alibaba的druid数据库连接池 -->
         <dependency>
