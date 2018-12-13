@@ -1,6 +1,7 @@
 package com.anjoy.cloud.component.config;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,14 +43,23 @@ public class JedisConfig {
     @Bean
     public JedisPool getJedisPool(){
         JedisPoolConfig jedisPoolConfig = getjedisPoolConfig();
-        JedisPool jedisPool = new JedisPool(
-                jedisPoolConfig,
-                host,
-                Integer.valueOf(port),
-                Integer.valueOf(connectionTimeout),
-                password,
-                Integer.valueOf(database)
-        );
+        JedisPool jedisPool;
+        if (StringUtils.isBlank(password)) {
+            jedisPool = new JedisPool(
+                    jedisPoolConfig,
+                    host,
+                    Integer.valueOf(port)
+            );
+        } else {
+            jedisPool = new JedisPool(
+                    jedisPoolConfig,
+                    host,
+                    Integer.valueOf(port),
+                    Integer.valueOf(connectionTimeout),
+                    password,
+                    Integer.valueOf(database)
+            );
+        }
         log.info("jedis初始化完毕");
         return jedisPool;
     }
