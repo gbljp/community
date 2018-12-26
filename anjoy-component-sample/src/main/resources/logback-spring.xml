@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <springProperty scop="context" name="MICROSERVICE_NAME" source="microservice.name" defaultValue="defaultname" />
+    <springProperty scop="context" name="MICROSERVICE_INSTANCE_NAME" source="microservice.instance.name" defaultValue="defaultinstancename" />
     <springProperty scop="context" name="LOG_HOME" source="logback.home" defaultValue="javaComponentsLog" />
+    <!--这里使用以上方式将application.properties参数注入到logback使用的rocketMQ中的时候出现问题，总是提示无法获取到参数的值，只能使用默认的方法-->
+    <!--所以唯一能够动态指定的方式是直接用命令行，在 -jar XXX.jar 之前，指定MQ的参数，包括了MQ_NAMESERVER，MQ_PRODUCER_GROUP_NAME，MQ_PRODUCER_INSTANCE_NAME-->
+    <!--例如 java -DMQ_PRODUCER_INSTANCE_NAME=anjoy1 -DMQ_PRODUCER_GROUP_NAME=anjoy -DMQ_NAMESERVER=192.168.5.71:9876 -jar anjoy-component-sample-1.0.jar-->
+
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -14,13 +20,13 @@
     <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/anjoy-component-sample.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/${MICROSERVICE_NAME}.log.%d{yyyy-MM-dd}.log</FileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <!--日志文件最大的大小-->
@@ -28,6 +34,26 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
+
+    <!--rocketMQ整合段-->
+    <!--<appender name="mqAppender1" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">-->
+        <!--<tag>${MQ_PRODUCER_INSTANCE_NAME:-defaultProducerInstance}</tag>-->
+        <!--<topic>log.${MQ_PRODUCER_GROUP_NAME:-defaultProducerGroup}</topic>-->
+        <!--<producerGroup>${MQ_PRODUCER_GROUP_NAME:-defaultProducerGroup}</producerGroup>-->
+        <!--<nameServerAddress>${MQ_NAMESERVER:-192.168.5.71:9876;192.168.5.72:9876}</nameServerAddress>-->
+        <!--<layout>-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+    <!--<appender name="mqAsyncAppender1" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--<queueSize>1024</queueSize>-->
+        <!--<discardingThreshold>80</discardingThreshold>-->
+        <!--<maxFlushTime>2000</maxFlushTime>-->
+        <!--<neverBlock>true</neverBlock>-->
+        <!--<appender-ref ref="mqAppender1"/>-->
+    <!--</appender>-->
+    <!--rocketMQ整合段-->
 
 
     <!--myibatis log configure-->
@@ -40,6 +66,8 @@
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
+        <!--取消下面的注释就可以使用rocketMQ作为日志组件-->
+        <!--<appender-ref ref="mqAsyncAppender1" />-->
     </root>
     <!--日志异步到数据库 -->
     <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->

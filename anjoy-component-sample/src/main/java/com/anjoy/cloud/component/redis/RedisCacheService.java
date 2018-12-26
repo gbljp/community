@@ -7,6 +7,8 @@ import org.springframework.util.SerializationUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Set;
+
 /*
  *
  * redis 缓存，使用方式是直接注入后，putobject或者getobject
@@ -115,7 +117,24 @@ public class RedisCacheService {
             returnResource(jedis);
         }
     }
-
+    /**
+     * 模糊查找并删除对象
+     * key + *  模糊主键加通配符
+     */
+    public void fuzzySearchAndRemoveObject(String key) {
+        Jedis jedis = null;
+        try {
+            jedis = getJedis();
+            Set<String> keys = jedis.keys( key + "*");
+            for (String item : keys) {
+                jedis.del(item.getBytes());
+            }
+        } catch (Exception ex) {
+            returnBrokenResource(jedis);
+        } finally {
+            returnResource(jedis);
+        }
+    }
     //判断key是否存在
     public boolean exists(String key) {
         Jedis jedis = null;

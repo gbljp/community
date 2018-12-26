@@ -236,6 +236,19 @@
             </exclusions>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-logappender -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-logappender</artifactId>
+            <version>4.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-tcnative</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
     </dependencies>
 
