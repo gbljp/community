@@ -1,7 +1,5 @@
 package com.anjoy.cloud.component.controller.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.anjoy.cloud.component.exception.ServiceException;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
@@ -12,24 +10,30 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @ControllerAdvice
+@ResponseBody
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 系统异常处理，比如：404,500
+     *
      *
      * @param req
      * @param e
      * @return
      * @throws Exception
      */
-    @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public JsonResult errorHandler(HttpServletRequest req, Exception e) throws Exception {
         logger.error("[GlobalExceptionHandler][errorHandler]exception", e);
+        return convertErrorMsg(e);
+    }
+
+    private JsonResult convertErrorMsg(Exception e){
         JsonResult jsonResult = new JsonResult();
         //判断exception类型，如果已经输出的是serviceException则直接抛出，否则转义成用户能看懂的错误输出
         if (!(e instanceof ServiceException)) {
@@ -50,4 +54,5 @@ public class GlobalExceptionHandler {
         }
         return jsonResult;
     }
+
 }
