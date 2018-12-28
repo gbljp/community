@@ -21,9 +21,9 @@ public class TokenService {
     private static long tockenLifeTime = (((((long) 90 * 24) * 60) * 60) * 1000); // 默认令牌的生命周期为90天
 
     /*
-     *
-     * 新建token   wuhy
-     * */
+    *
+    * 新建token   wuhy
+    * */
     public static ApiToken newApiToken(String LoginName, String userId, String endTime){
         ApiToken apiToken = new ApiToken();
         apiToken.setLoginTime(new SimpleDateFormat(DateUtil.FMT_DATETIME_COMPACT).format(new Date()));
@@ -49,10 +49,10 @@ public class TokenService {
         return tokenStr;
     }
 
-    /*
-     *
-     * 校验token  wuhy
-     * */
+   /*
+   *
+   * 校验token  wuhy
+   * */
 
     public static String verifyToken(String tokenStr) throws Exception {
         String apiTokenStr = null;
