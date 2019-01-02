@@ -1,11 +1,9 @@
 package com.anjoy.cloud.component.config;
 
 import com.anjoy.cloud.component.controller.interceptor.GlobalInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.*;
 
 
 /**
@@ -14,7 +12,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * @author Administrator
  */
 @Configuration
-public class MyWebAppConfigurer extends WebMvcConfigurationSupport {
+public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
+
+    @Value("${microservice.swagger.home}")
+    String swaggerHome;
+
+    @Value("${springfox.documentation.swagger.v2.path}")
+    String swaggerJsonHome;
 
 
     /*
@@ -27,8 +31,8 @@ public class MyWebAppConfigurer extends WebMvcConfigurationSupport {
                 .excludePathPatterns(
                         //wuhy 这里是swagger的配置，暂时不需要改
                         "/swagger-resources/**",
-                        "/anjoyCloudApiDoc/**",
-                        "/anjoyCloudApiDocJson",
+                        swaggerHome+"/**",
+                        swaggerJsonHome,
 
 
                         //wuhy 这里添加排除列表，将不需要使用token控制的功能排除在外
@@ -43,11 +47,11 @@ public class MyWebAppConfigurer extends WebMvcConfigurationSupport {
     * */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-
-        registry.addRedirectViewController("/anjoyCloudApiDoc/anjoyCloudApiDocJson", "/anjoyCloudApiDocJson");
-        registry.addRedirectViewController("/anjoyCloudApiDoc/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui");
-        registry.addRedirectViewController("/anjoyCloudApiDoc/swagger-resources/configuration/security", "/swagger-resources/configuration/security");
-        registry.addRedirectViewController("/anjoyCloudApiDoc/swagger-resources", "/swagger-resources");
+//        wuhy 注意这里的重定向只对开发环境有用，正式环境会用nginx的proxy_pass来做，因为这种重定向会丢失https协议
+        registry.addRedirectViewController(swaggerHome+swaggerJsonHome, swaggerJsonHome);
+        registry.addRedirectViewController(swaggerHome+"/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui");
+        registry.addRedirectViewController(swaggerHome+"/swagger-resources/configuration/security", "/swagger-resources/configuration/security");
+        registry.addRedirectViewController(swaggerHome+"/swagger-resources", "/swagger-resources");
     }
 
 
@@ -58,8 +62,8 @@ public class MyWebAppConfigurer extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.
-                addResourceHandler("/anjoyCloudApiDoc/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+                addResourceHandler(swaggerHome+"/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
         registry.
-                addResourceHandler("/anjoyCloudApiDoc/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+                addResourceHandler(swaggerHome+"/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 } 
