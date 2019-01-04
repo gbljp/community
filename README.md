@@ -26,6 +26,8 @@ java -jar anjoy-component-sample-1.0.jar --server.port=8980 --logback.home=/test
 
 上面这段的意思就是动态配置服务器端口，日志文件位置，数据库连接参数与redis连接参数，其他也是类似的
 
+swagger 注入的地址已经改变，比如你的服务启动是在 http://localhost:8088 ，那么对应swagger地址为 http://localhost:8088/anjoyCloudApiDoc/swagger-ui.html
+
 作者：吴宏宇
 
 -----------------------------------
