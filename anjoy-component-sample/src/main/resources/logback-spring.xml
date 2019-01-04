@@ -4,9 +4,8 @@
     <springProperty scop="context" name="MICROSERVICE_NAME" source="microservice.name" defaultValue="defaultname" />
     <springProperty scop="context" name="MICROSERVICE_INSTANCE_NAME" source="microservice.instance.name" defaultValue="defaultinstancename" />
     <springProperty scop="context" name="LOG_HOME" source="logback.home" defaultValue="javaComponentsLog" />
-    <!--这里使用以上方式将application.properties参数注入到logback使用的rocketMQ中的时候出现问题，总是提示无法获取到参数的值，只能使用默认的方法-->
-    <!--所以唯一能够动态指定的方式是直接用命令行，在 -jar XXX.jar 之前，指定MQ的参数，包括了MQ_NAMESERVER，MQ_PRODUCER_GROUP_NAME，MQ_PRODUCER_INSTANCE_NAME-->
-    <!--例如 java -DMQ_PRODUCER_INSTANCE_NAME=anjoy1 -DMQ_PRODUCER_GROUP_NAME=anjoy -DMQ_NAMESERVER=192.168.5.71:9876 -jar anjoy-component-sample-1.0.jar-->
+    <springProperty scop="context" name="MQ_NAMESERVER" source="rocketmq.namesrvAddr" defaultValue=""/>
+    <springProperty scop="context" name="MQ_ENABLE" source="logback.rocketMQ.enable" defaultValue=""/>
 
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -36,23 +35,26 @@
     </appender>
 
     <!--rocketMQ整合段-->
-    <!--<appender name="mqAppender1" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">-->
-        <!--<tag>${MQ_PRODUCER_INSTANCE_NAME:-defaultProducerInstance}</tag>-->
-        <!--<topic>log.${MQ_PRODUCER_GROUP_NAME:-defaultProducerGroup}</topic>-->
-        <!--<producerGroup>${MQ_PRODUCER_GROUP_NAME:-defaultProducerGroup}</producerGroup>-->
-        <!--<nameServerAddress>${MQ_NAMESERVER:-192.168.5.71:9876;192.168.5.72:9876}</nameServerAddress>-->
-        <!--<layout>-->
-            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>-->
-        <!--</layout>-->
-    <!--</appender>-->
+    <appender name="mqAppender1" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+        <tag>${MICROSERVICE_INSTANCE_NAME}</tag>
+        <topic>${MICROSERVICE_NAME}</topic>
+        <producerGroup>${MICROSERVICE_INSTANCE_NAME}</producerGroup>
+        <nameServerAddress>${MQ_NAMESERVER}</nameServerAddress>
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
 
-    <!--<appender name="mqAsyncAppender1" class="ch.qos.logback.classic.AsyncAppender">-->
-        <!--<queueSize>1024</queueSize>-->
-        <!--<discardingThreshold>80</discardingThreshold>-->
-        <!--<maxFlushTime>2000</maxFlushTime>-->
-        <!--<neverBlock>true</neverBlock>-->
-        <!--<appender-ref ref="mqAppender1"/>-->
-    <!--</appender>-->
+    <appender name="mqAsyncAppender1" class="ch.qos.logback.classic.AsyncAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${MQ_ENABLE}</level>
+        </filter>
+        <queueSize>1024</queueSize>
+        <discardingThreshold>80</discardingThreshold>
+        <maxFlushTime>2000</maxFlushTime>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="mqAppender1"/>
+    </appender>
     <!--rocketMQ整合段-->
 
 
@@ -67,7 +69,7 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
         <!--取消下面的注释就可以使用rocketMQ作为日志组件-->
-        <!--<appender-ref ref="mqAsyncAppender1" />-->
+        <appender-ref ref="mqAsyncAppender1" />
     </root>
     <!--日志异步到数据库 -->
     <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->
