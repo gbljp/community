@@ -1,9 +1,19 @@
 package com.anjoy.cloud.component.config;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.anjoy.cloud.component.controller.interceptor.GlobalInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -19,6 +29,9 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
     @Value("${springfox.documentation.swagger.v2.path}")
     String swaggerJsonHome;
+
+    @Value("${microservice.usingFastJsonAsDefaultHttpMessageConverter}")
+    Boolean ifUsingFastJson;
 
 
     /*
@@ -66,4 +79,45 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         registry.
                 addResourceHandler(swaggerHome+"/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
-} 
+
+    /*
+     *
+     * 全局替换JSON解析器为阿里巴巴的fastjson解析器
+     * */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+
+        if (ifUsingFastJson) {
+            //禁用jackson解析器
+            Iterator<HttpMessageConverter<?>> iterator = converters.iterator();
+            while (iterator.hasNext()) {
+                HttpMessageConverter<?> converter = iterator.next();
+                if (converter instanceof MappingJackson2HttpMessageConverter) {
+                    iterator.remove();
+                }
+            }
+
+            //添加fastjson解析器
+            //1.定义一个消息转换对象convert
+            FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+
+            //2.添加fastJson配置信息，是否需要格式化
+            FastJsonConfig fastJsonConfig = new FastJsonConfig();
+            fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,
+                    SerializerFeature.QuoteFieldNames,
+                    SerializerFeature.WriteMapNullValue,
+                    SerializerFeature.UseISO8601DateFormat);
+
+            List<MediaType> fastMediaTypes = new ArrayList<>();
+            fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+            fastConverter.setSupportedMediaTypes(fastMediaTypes);
+
+            //3.在convert添加配置信息
+            fastConverter.setFastJsonConfig(fastJsonConfig);
+
+            //4.将convert添加到converters中
+            converters.add(fastConverter);
+        }
+    }
+}
