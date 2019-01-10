@@ -6,6 +6,7 @@
     <springProperty scop="context" name="LOG_HOME" source="logback.home" defaultValue="javaComponentsLog" />
     <springProperty scop="context" name="MQ_NAMESERVER" source="rocketmq.namesrvAddr" defaultValue=""/>
     <springProperty scop="context" name="MQ_ENABLE" source="logback.rocketMQ.enable" defaultValue=""/>
+    <springProperty scop="context" name="MQ_ENABLE_DEBUG" source="logback.rocketMQ.enableDebug" defaultValue=""/>
 
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -37,7 +38,7 @@
     <!--rocketMQ整合段-->
     <appender name="mqAppender1" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
         <tag>${MICROSERVICE_INSTANCE_NAME}</tag>
-        <topic>${MICROSERVICE_NAME}</topic>
+        <topic>${MICROSERVICE_NAME}_LOG</topic>
         <producerGroup>${MICROSERVICE_INSTANCE_NAME}</producerGroup>
         <nameServerAddress>${MQ_NAMESERVER}</nameServerAddress>
         <layout>
@@ -55,6 +56,28 @@
         <neverBlock>true</neverBlock>
         <appender-ref ref="mqAppender1"/>
     </appender>
+
+    <!--rocketMQ整合段-->
+    <appender name="mqAppender2" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+        <tag>${MICROSERVICE_INSTANCE_NAME}</tag>
+        <topic>${MICROSERVICE_NAME}_LOG_DEBUG</topic>
+        <producerGroup>${MICROSERVICE_INSTANCE_NAME}</producerGroup>
+        <nameServerAddress>${MQ_NAMESERVER}</nameServerAddress>
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [${MICROSERVICE_INSTANCE_NAME}][%thread] %-5level %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="mqAsyncAppender2" class="ch.qos.logback.classic.AsyncAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${MQ_ENABLE_DEBUG}</level>
+        </filter>
+        <queueSize>1024</queueSize>
+        <discardingThreshold>80</discardingThreshold>
+        <maxFlushTime>2000</maxFlushTime>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="mqAppender2"/>
+    </appender>
     <!--rocketMQ整合段-->
 
 
@@ -70,6 +93,7 @@
         <appender-ref ref="FILE" />
         <!--取消下面的注释就可以使用rocketMQ作为日志组件-->
         <appender-ref ref="mqAsyncAppender1" />
+        <appender-ref ref="mqAsyncAppender2"/>
     </root>
     <!--日志异步到数据库 -->
     <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->
