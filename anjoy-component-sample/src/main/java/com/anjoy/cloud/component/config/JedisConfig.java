@@ -60,7 +60,7 @@ public class JedisConfig {
                     Integer.valueOf(database)
             );
         }
-        log.info("jedis初始化完毕");
+        log.debug("jedis初始化完毕");
         return jedisPool;
     }
 

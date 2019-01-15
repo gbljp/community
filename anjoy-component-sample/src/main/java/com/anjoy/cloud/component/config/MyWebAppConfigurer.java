@@ -4,6 +4,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.anjoy.cloud.component.controller.interceptor.GlobalInterceptor;
+import com.anjoy.cloud.component.controller.interceptor.LoggerInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -40,6 +41,9 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
     * */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //日志拦截注入
+        registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
+        //token验证拦截注入
         registry.addInterceptor(new GlobalInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns(
                         //wuhy 这里是swagger的配置，暂时不需要改

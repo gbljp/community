@@ -31,22 +31,22 @@ public class GlobalInterceptor implements HandlerInterceptor {
         String token= request.getHeader("token");
         String userId= request.getHeader("userId");
 
-        logger.info("GlobalInterceptor.preHandle.url= " +url+",token:"+token+",userId:"+userId);
+        logger.debug("GlobalInterceptor.preHandle.url= " +url+",token:"+token+",userId:"+userId);
 
         //如果没有token则返回需要重新登陆的提示  wuhy20181129
         if(StringUtils.isBlank(token))
         {
-            logger.info("[Token is null]："+url);
+            logger.debug("[Token is null]："+url);
             throw new ServiceException(JsonResultCode.NEEDLOGIN,"您还未登陆或登陆已过期，请重新登陆");
         }
 
         if(StringUtils.isBlank(userId))
         {
-            logger.info("[userId is null]："+url);
+            logger.debug("[userId is null]："+url);
             throw new ServiceException(JsonResultCode.FAILURE,"未传入用户，请检查调用方法传入参数");
         }
         if (!userId.equals(TokenService.verifyToken(token))){
-            logger.info("[userId NOT EQUAL token]："+url);
+            logger.debug("[userId NOT EQUAL token]："+url);
             throw new ServiceException(JsonResultCode.NEEDLOGIN,"用户与令牌不匹配，请重新登陆");
         }
 

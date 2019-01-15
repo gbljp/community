@@ -118,7 +118,7 @@ public class RocketmqConfig {
          * 注意：切记不可以在每次发送消息时，都调用start方法
          */
         producer.start();
-        log.info("RocketMq defaultProducer Started.");
+        log.debug("RocketMq defaultProducer Started.");
         return producer;
     }
 
@@ -158,7 +158,7 @@ public class RocketmqConfig {
          */
         producer.start();
 
-        log.info("RocketMq TransactionMQProducer Started.");
+        log.debug("RocketMq TransactionMQProducer Started.");
         return producer;
     }
 
@@ -203,24 +203,24 @@ public class RocketmqConfig {
             consumer.registerMessageListener((List<MessageExt> msgs, ConsumeOrderlyContext context) -> {
                 try {
                     context.setAutoCommit(true);
-                    log.info("========== MQ收到新序列消息到达："+msgs.size()+"条 ===========");
+                    log.debug("========== MQ收到新序列消息到达："+msgs.size()+"条 ===========");
                     msgs =filter(msgs);
                     if(msgs.size()==0) return ConsumeOrderlyStatus.SUCCESS;
                     //发布事件，分发处理
                     this.publisher.publishEvent(new RocketmqEvent(msgs, consumer));
-                    log.info("其中"+msgs.size()+"条需要处理，列表如下：");
+                    log.debug("其中"+msgs.size()+"条需要处理，列表如下：");
                     Calendar cal = Calendar.getInstance();
                     cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd HH:mm:ss.SSS");
                     for (MessageExt me: msgs){
-                        log.info("======================================");
-                        log.info("TimeBorn:"+dateFormat.format(cal.getTime()));
-                        log.info("Host:"+me.getBornHost().toString());
-                        log.info("Topic:"+me.getTopic());
-                        log.info("Tag:"+me.getTags());
-                        log.info("keys:"+me.getKeys());
-                        log.info("Body:"+new String(me.getBody()));
-                        log.info("======================================");
+                        log.debug("======================================");
+                        log.debug("TimeBorn:"+dateFormat.format(cal.getTime()));
+                        log.debug("Host:"+me.getBornHost().toString());
+                        log.debug("Topic:"+me.getTopic());
+                        log.debug("Tag:"+me.getTags());
+                        log.debug("keys:"+me.getKeys());
+                        log.debug("Body:"+new String(me.getBody()));
+                        log.debug("======================================");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -233,25 +233,25 @@ public class RocketmqConfig {
             //同步消费监听
             consumer.registerMessageListener((List<MessageExt> msgs, ConsumeConcurrentlyContext context) -> {
                 try {
-                    log.info("========== MQ收到新并发消息到达："+msgs.size()+"条 ===========");
+                    log.debug("========== MQ收到新并发消息到达："+msgs.size()+"条 ===========");
                     msgs=filter(msgs);
                     if(msgs.size()==0) return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                     this.publisher.publishEvent(new RocketmqEvent(msgs, consumer));
-                    log.info("其中"+msgs.size()+"条需要处理，列表如下：");
+                    log.debug("其中"+msgs.size()+"条需要处理，列表如下：");
                     Calendar cal = Calendar.getInstance();
                     cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd HH:mm:ss.SSS");
                     for (MessageExt me: msgs){
                         cal.setTimeInMillis(me.getBornTimestamp());
-//                        log.info("Topic:"+me.getTopic()+",Tag:"+me.getTags()+",Body:"+new String(me.getBody()));
-                        log.info("======================================");
-                        log.info("TimeBorn:"+dateFormat.format(cal.getTime()));
-                        log.info("Host:"+me.getBornHost().toString());
-                        log.info("Topic:"+me.getTopic());
-                        log.info("Tag:"+me.getTags());
-                        log.info("keys:"+me.getKeys());
-                        log.info("Body:"+new String(me.getBody()));
-                        log.info("======================================");
+//                        log.debug("Topic:"+me.getTopic()+",Tag:"+me.getTags()+",Body:"+new String(me.getBody()));
+                        log.debug("======================================");
+                        log.debug("TimeBorn:"+dateFormat.format(cal.getTime()));
+                        log.debug("Host:"+me.getBornHost().toString());
+                        log.debug("Topic:"+me.getTopic());
+                        log.debug("Tag:"+me.getTags());
+                        log.debug("keys:"+me.getKeys());
+                        log.debug("Body:"+new String(me.getBody()));
+                        log.debug("======================================");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -272,10 +272,10 @@ public class RocketmqConfig {
                     try {
                         consumer.start();
                     } catch (Exception e) {
-                        log.info("RocketMq pushConsumer Start failure!!!.");
+                        log.debug("RocketMq pushConsumer Start failure!!!.");
                         log.error(e.getMessage(), e);
                     }
-                    log.info("RocketMq pushConsumer Started.");
+                    log.debug("RocketMq pushConsumer Started.");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
