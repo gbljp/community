@@ -36,15 +36,15 @@ public class LoggerInterceptor implements HandlerInterceptor {
             if(handler instanceof HandlerMethod){
                 StringBuilder sb = new StringBuilder();
                 sb.append("\n");
-                sb.append("URL：").append(request.getRequestURL()).append("\n");
-                sb.append("ContextPathAndURI：").append(url).append("\n");
-                sb.append("Controller：").append(((HandlerMethod) handler).getBean().getClass().getName()).append("\n");
-                sb.append("Method：").append(((HandlerMethod) handler).getMethod().getName()).append("\n");
-                sb.append("token：").append(token).append("\n");
-                sb.append("userId：").append(userId).append("\n");
+                sb.append("URL: ").append(request.getRequestURL()).append("\n");
+                sb.append("ContextPathAndURI: ").append(url).append("\n");
+                sb.append("Controller: ").append(((HandlerMethod) handler).getBean().getClass().getName()).append("\n");
+                sb.append("Method: ").append(((HandlerMethod) handler).getMethod().getName()).append("\n");
+                sb.append("token: ").append(token).append("\n");
+                sb.append("userId: ").append(userId).append("\n");
                 //通过输入流获取POST请求中的参数
-                sb.append("Body：").append(new BodyReaderHttpServletRequestWrapper(request).getBodyString()).append("\n");
-                sb.append("ParamsMap：").append(getParamString(request.getParameterMap())).append("\n");
+                sb.append("Body: ").append(new BodyReaderHttpServletRequestWrapper(request).getBodyString()).append("\n");
+                sb.append("ParamsMap: ").append(getParamString(request.getParameterMap())).append("\n");
                 logger.debug(sb.toString());
             }
         } catch (Exception e) {
