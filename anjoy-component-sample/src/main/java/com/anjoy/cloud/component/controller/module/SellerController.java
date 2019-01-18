@@ -4,6 +4,7 @@ package com.anjoy.cloud.component.controller.module;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.anjoy.cloud.component.controller.base.BaseController;
+import com.anjoy.cloud.component.feign.client.TestEurekaServerInterface;
 import com.anjoy.cloud.component.feign.client.TestFeignInterface;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
@@ -47,6 +48,9 @@ public class SellerController extends BaseController {
     @Autowired
     TestFeignInterface testFeignInterface;
 
+    @Autowired
+    TestEurekaServerInterface testEurekaServerInterface;
+
     /**
      * 测试接口
      * @param request
@@ -62,7 +66,8 @@ public class SellerController extends BaseController {
         String account = this.getNotNull("account", request);
 
 //        feign调用实例
-        String ls = testFeignInterface.hello(account);
+        JsonResult jr = testEurekaServerInterface.hello("112233");
+//        String ls = testFeignInterface.hello(account);
 
 //        List<Seller> ls = sellerService.selectList(new EntityWrapper<Seller>()
 //                .eq("seller_name", "必火酒水饮料批发")
@@ -71,7 +76,7 @@ public class SellerController extends BaseController {
 
 
         logger.info("SellerController.test.account:" + account);
-        return new JsonResult(JsonResultCode.SUCCESS, account, ls);
+        return new JsonResult(JsonResultCode.SUCCESS, account, jr);
     }
 
     /**

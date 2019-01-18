@@ -20,11 +20,42 @@
         <commons.codec.version>1.10</commons.codec.version>
         <commons.configuration.version>1.10</commons.configuration.version>
     </properties>
+
+    <repositories>
+        <!--阿里云maven-->
+        <repository>
+            <id>aliyun-repos</id>
+            <name>aliyun Repos</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+
+        <!--核心国外maven-->
+        <repository>
+            <id>central-repos</id>
+            <name>Central Repository</name>
+            <url>http://repo.maven.apache.org/maven2</url>
+        </repository>
+
+        <!--安井私有maven-->
+        <repository>
+            <id>anjoy-repos</id>
+            <name>anjoy Repos</name>
+            <url>http://bos.ajxt.net:8113/nexus/content/repositories/thirdparty/</url>
+        </repository>
+
+    </repositories>
+
     <dependencies>
         <!--添加Web依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--eurekaClient-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
         <!--添加mysql依赖 -->

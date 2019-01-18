@@ -54,7 +54,8 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
                         //wuhy 这里添加排除列表，将不需要使用token控制的功能排除在外
                         "/buyer/test",
-                        "/buyer/test1/**");
+                        "/buyer/test1/**",
+                        "/seller/test");
         super.addInterceptors(registry);
     }
 
