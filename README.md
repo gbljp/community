@@ -2,10 +2,11 @@
 ----------------------------------
 用法：
 1. 使用本框架需要使用idea
-2. idea必须下载lombok插件
+2. idea必须下载lombok插件，可以参考https://jingyan.baidu.com/article/0a52e3f4e53ca1bf63ed725c.html
 3. 直接在项目上开自己的分支，并复制anjoy-component-sample为自己的项目，开始撸代码。或者你要fork整个项目到自己的repo中去也行。**绝对禁止直接在master主干上撸自己的代码或者将自己的代码合并到主干，违者删库踢出**
 
-mybatis-plus的用法可以参考SellerController或者BuyerController或者直接看官网：https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7
+mybatis-plus的用法可以参考SellerController或者BuyerController或者直接看官网：
+https://mybatis.plus/guide/crud-interface.html
 
 lombok语法，，，这个实在没什么好说的请自行百度
 
