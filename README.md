@@ -10,15 +10,15 @@ https://mybatis.plus/guide/crud-interface.html
 
 lombok语法，，，这个实在没什么好说的请自行百度
 
-#编译方式：
+### 编译方式：
 
 mvn clean package -e 编译后为jar文件
 
-#调试方式：
+### 调试方式：
 
 idea能直接认对应的application，可以直接运行，由于springboot的热部署中间件devtools有bug会导致加载类在判断equal或者是存入redis后取出做类型强转换时出错，所以本项目未内置热部署插件
 
-#运行方式：
+### 运行方式：
 
 运行使用命令行 java -jar XXX.jar
 可以把application.properties中的参数携带到命令行中，达到动态配置的目的，例如：
@@ -27,7 +27,7 @@ java -jar anjoy-component-sample-1.0.jar --server.port=8980 --logback.home=/test
 
 上面这段的意思就是动态配置服务器端口，日志文件位置，数据库连接参数与redis连接参数，其他也是类似的
 
-#特性列表
+### 特性列表：
 
 启用了swagger，并且swagger 注入的地址已经改变，比如你的服务启动是在 http://localhost:8088 ，那么对应swagger地址为 http://localhost:8088/anjoyCloudApiDoc/swagger-ui.html
 
