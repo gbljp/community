@@ -1,5 +1,6 @@
 package com.anjoy.cloud.component.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +26,9 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggersConfig {
+
+	@Value("${microservice.swagger.name}")
+	private String swaggerName;
 
 	@Bean
 	public Docket api() {
@@ -58,7 +62,7 @@ public class SwaggersConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("安井云平台运行组件模板")
+				.title("安井微服务开发平台在线API文档 - "+swaggerName)
 				.description("")
 				.termsOfServiceUrl("http://")
 				.contact(new Contact("吴宏宇","",""))

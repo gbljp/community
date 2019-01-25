@@ -1,17 +1,22 @@
 package com.anjoy.cloud.component.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.anjoy.cloud.component.controller.interceptor.GlobalInterceptor;
 import com.anjoy.cloud.component.controller.interceptor.LoggerInterceptor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +39,19 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
     @Value("${microservice.usingFastJsonAsDefaultHttpMessageConverter}")
     Boolean ifUsingFastJson;
 
+    @Value("${microservice.fastjson.localdatetimeConvert}")
+    String fastJsonConvert;
+
+    @Bean
+    public GlobalInterceptor globalInterceptor(){
+        return new GlobalInterceptor();
+    }
+
+    @Bean
+    public LoggerInterceptor loggerInterceptor(){
+        return new LoggerInterceptor();
+    }
+
 
     /*
     *
@@ -42,9 +60,9 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //日志拦截注入
-        registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(loggerInterceptor()).addPathPatterns("/**");
         //token验证拦截注入
-        registry.addInterceptor(new GlobalInterceptor()).addPathPatterns("/**")
+        registry.addInterceptor(globalInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns(
                         //wuhy 这里是swagger的配置，暂时不需要改
                         "/swagger-resources/**",
@@ -113,6 +131,21 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                     SerializerFeature.QuoteFieldNames,
                     SerializerFeature.WriteMapNullValue,
                     SerializerFeature.UseISO8601DateFormat);
+
+            fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+//                if (source == null) {
+//                    return "";
+//                }
+                if (source instanceof LocalDateTime) {
+                    if (fastJsonConvert.equals("timestamp")){
+                        return ((LocalDateTime)source).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                    }else if (fastJsonConvert.equals("datetime")){
+                        return df.format((LocalDateTime)source);
+                    }
+                }
+                return source;
+            });
 
             List<MediaType> fastMediaTypes = new ArrayList<>();
             fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);

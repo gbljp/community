@@ -4,6 +4,9 @@ package com.anjoy.cloud.component.utils;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -689,4 +692,30 @@ public class DateUtil
 		calendar.setTime(date);
 		return calendar.get(dateType);
 	}
+
+	/**
+	 * date 转换 localdatetime
+	 * @param date
+	 * @return
+	 */
+	public static LocalDateTime date2LocalDateTime(Date date) {
+		if(null == date) {
+			return null;
+		}
+		return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+	}
+
+	/*
+	 *
+	 * localdatetime 转换 date
+	 *
+	 * */
+	public static Date localDateTime2Date(LocalDateTime localDateTime) {
+		if(null == localDateTime) {
+			return null;
+		}
+		ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+		return Date.from(zonedDateTime.toInstant());
+	}
+
 }
