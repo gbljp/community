@@ -10,7 +10,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -53,14 +56,16 @@ public class WebLogAspect {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append("\n");
-//            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//            if (attributes != null) {
-//                HttpServletRequest request = attributes.getRequest();
-//                if (request != null) {
-//                    // 记录下请求内容
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes != null) {
+                HttpServletRequest request = attributes.getRequest();
+                if (request != null) {
+                    // 记录下请求内容
+                    String reqId =request.getHeader("X-Request-Id");
+                    sb.append("reqId: ").append(reqId).append("\n");
 //                    sb.append("URL: " + request.getRequestURL().toString() + "\n");
-//                }
-//            }
+                }
+            }
             sb.append("Class_Method: "+joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName()+"\n");
             sb.append("Args: " + Arrays.toString(joinPoint.getArgs())+"\n");
             try {

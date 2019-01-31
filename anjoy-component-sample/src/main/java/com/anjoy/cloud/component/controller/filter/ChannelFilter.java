@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /*
- * 复写过滤器，用于防止在获取requestBody后再次获取丢失的问题
- * wuhy
- * */
+* 复写过滤器，用于防止在获取requestBody后再次获取丢失的问题
+* wuhy
+* */
 @Configuration
 @WebFilter(urlPatterns = "/*",filterName = "channelFilter")
 public class ChannelFilter implements Filter {

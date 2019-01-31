@@ -31,6 +31,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
         //获取登陆时候传入的token  wuhy20181129
         String token= request.getHeader("token");
         String userId= request.getHeader("userId");
+        String reqId =request.getHeader("X-Request-Id");
 
         try {
             if(handler instanceof HandlerMethod){
@@ -42,6 +43,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
                 sb.append("Method: ").append(((HandlerMethod) handler).getMethod().getName()).append("\n");
                 sb.append("token: ").append(token).append("\n");
                 sb.append("userId: ").append(userId).append("\n");
+                sb.append("reqId: ").append(reqId).append("\n");
                 //通过输入流获取POST请求中的参数
                 sb.append("Body: ").append(new BodyReaderHttpServletRequestWrapper(request).getBodyString()).append("\n");
                 sb.append("ParamsMap: ").append(getParamString(request.getParameterMap())).append("\n");

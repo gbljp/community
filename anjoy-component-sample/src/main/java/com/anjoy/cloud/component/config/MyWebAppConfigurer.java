@@ -69,9 +69,15 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                         swaggerHome+"/**",
                         swaggerJsonHome,
 
+                        //静态资源目录
+//                        "/webser/storage/**",
+
+                        //默认的错误信息
+                        "/error",
+
 
                         //wuhy 这里添加排除列表，将不需要使用token控制的功能排除在外
-                        "/buyer/test",
+                        "/buyer/**",
                         "/buyer/test1/**",
                         "/seller/test");
         super.addInterceptors(registry);
@@ -101,6 +107,8 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 addResourceHandler(swaggerHome+"/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
         registry.
                 addResourceHandler(swaggerHome+"/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        //静态资源映射
+//        registry.addResourceHandler("/webser/storage/**").addResourceLocations("file:/webser/storage/");
     }
 
     /*
