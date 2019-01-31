@@ -56,7 +56,7 @@ public class Md5Util {
 		return hexValue.toString();
 
 	}
-
+	
 	public static void main(String[] args) {
 //		String s = " ,woshi,  ,wo";
 //		String[] ss = s.split(",");
@@ -64,7 +64,7 @@ public class Md5Util {
 //		for (int i = 0; i < ss.length; i++) {
 //			System.err.println("ss[i]:"+ss[i]);
 //		}
-
+		
 //		System.out.println(MD5("13934235194"));//447daa818957b8c82de1f710c5dc7753
 		System.out.println(MD5("15034236321"));//f9fb3b41b169e1e34b12595123af3491
 	}
@@ -85,5 +85,5 @@ public class Md5Util {
 		}
 		return resultString;
 	}
-
+	
 }

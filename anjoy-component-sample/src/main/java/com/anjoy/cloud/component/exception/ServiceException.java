@@ -2,7 +2,7 @@ package com.anjoy.cloud.component.exception;
 
 /**
  * service异常，业务异常继续于当前接口
- *
+ * 
  * @author wangfucai
  */
 public class ServiceException extends RuntimeException {
