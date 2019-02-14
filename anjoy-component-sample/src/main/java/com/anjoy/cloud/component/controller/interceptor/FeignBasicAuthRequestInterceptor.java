@@ -19,13 +19,15 @@ public class FeignBasicAuthRequestInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        Enumeration<String> headerNames = request.getHeaderNames();
-        if (headerNames != null) {
-            while (headerNames.hasMoreElements()) {
-                String name = headerNames.nextElement();
-                String values = request.getHeader(name);
-                requestTemplate.header(name, values);
+        if (attributes != null) {   //异步调用feign的时候，是获取不到原线程中的请求头信息的，这边拿到的就是null，所以异步调用需要自己处理请求头
+            HttpServletRequest request = attributes.getRequest();
+            Enumeration<String> headerNames = request.getHeaderNames();
+            if (headerNames != null) {
+                while (headerNames.hasMoreElements()) {
+                    String name = headerNames.nextElement();
+                    String values = request.getHeader(name);
+                    requestTemplate.header(name, values);
+                }
             }
         }
     }

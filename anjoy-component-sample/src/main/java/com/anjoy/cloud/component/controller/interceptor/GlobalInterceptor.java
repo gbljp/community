@@ -1,7 +1,6 @@
 package com.anjoy.cloud.component.controller.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.anjoy.cloud.component.entity.Users;
 import com.anjoy.cloud.component.exception.ServiceException;
 import com.anjoy.cloud.component.feign.client.AuthorizeFeignClient;
 import com.anjoy.cloud.component.result.JsonResult;
