@@ -77,8 +77,12 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
 
                         //wuhy 这里添加排除列表，将不需要使用token控制的功能排除在外
-                        "/test/test",
-                        "/test/getToken"
+                        "/test/01test",
+                        "/test/02getToken",
+                        "/test/04getFromTable",
+                        "/test/05saveToTable",
+                        "/test/06updateTable",
+                        "/test/07deleteFromTable"
                         );
         super.addInterceptors(registry);
     }
