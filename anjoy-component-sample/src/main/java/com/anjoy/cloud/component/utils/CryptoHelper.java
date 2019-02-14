@@ -19,8 +19,8 @@ public class CryptoHelper {
     //aes加密使用key和iv，禁止直接在前端js写入这个值，如果需要则采用请求-传值的方式
     //后续这2个值会直接维护到数据库中，这样一旦key和iv泄漏只需要在数据库中改变这2个值就可以
     //也可以通过改变这2个值达到注销所有的令牌的目的
-    private static String key = "eF4e942af4O8O123";
-    private static String iv = "cc8dqJ8Rec1av32g";
+    private static String key = "814EEv2a14g8BLol";
+    private static String iv = "ad8dqJ8ReF1a10lL";
     private static String seperateChar = "~";
 
 

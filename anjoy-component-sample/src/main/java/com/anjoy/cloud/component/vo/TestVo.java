@@ -21,6 +21,9 @@ public class TestVo implements Serializable {
     @ApiModelProperty(value = "id")
     private String id;
 
+    @ApiModelProperty(value = "登陆账号")
+    private String account;
+
     @ApiModelProperty(value = "名称")
     private String name;
 
