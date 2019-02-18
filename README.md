@@ -1,7 +1,12 @@
 #安井微服务开发平台1.0版
 ----------------------------------
+### 学习前提：
+1. java web开发相关经验
+2. springMVC框架开发经验，熟悉spring分层的意义以及对应代码的编写方式（controller，service，dao，entity，vo）
+3. Mybatis开发经验，熟悉xml编写sql的相关经验
+4. mysql数据库开发经验，熟悉表，字段，sql，数据库事务等
 ### 用法：
-1. 使用本框架需要使用idea
+1. 使用本框架需要使用idea2017以上版本
 2. idea必须下载lombok插件，可以参考https://jingyan.baidu.com/article/0a52e3f4e53ca1bf63ed725c.html
 3. 直接在项目上开自己的分支，并复制anjoy-component-sample为自己的项目，开始撸代码。或者你要fork整个项目到自己的repo中去也行。**绝对禁止直接在master主干上撸自己的代码或者将自己的代码合并到主干，违者删库踢出**
 
@@ -29,7 +34,11 @@ java -jar anjoy-component-sample-1.0.jar --server.port=8980 --logback.home=/test
 
 ### 特性列表：
 
-启用了swagger，并且swagger 注入的地址已经改变，比如你的服务启动是在 http://localhost:8088 ，那么对应swagger地址为 http://localhost:8088/anjoyCloudApiDoc/swagger-ui.html
+本框架适用于各类微服务开发（CRUD项目，授权服务，分布式计算，接口调用等等），既可以作为大型项目构建的基础微服务组件使用，也可以作为独立的前后端分离中小项目后端使用
+
+编译后的微服务可以独立使用，也可以接入eureka生态实现负载均衡，热部署与灰度发布，接入后支持健康度检查与监控等等。
+
+默认启用了swagger，并且swagger 注入的地址已经改变，比如你的服务启动是在 http://localhost:8088 ，那么对应swagger地址为 http://localhost:8088/anjoyCloudApiDoc/swagger-ui.html
 
 支持feign+ribbon+eureka的微服务调用方式，支持负载均衡，降级，熔断，如果需要和eureka联合使用，请查考冻品先生分支的调用方式
 
