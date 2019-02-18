@@ -1,14 +1,14 @@
 #安井微服务开发平台1.0版
 ----------------------------------
 ### 学习前提：
-1. java web开发相关经验
-2. springMVC框架开发经验，熟悉spring分层的意义以及对应代码的编写方式（controller，service，dao，entity，vo）
-3. Mybatis开发经验，熟悉xml编写sql的相关经验
-4. mysql数据库开发经验，熟悉表，字段，sql，数据库事务等
+java web开发相关经验
+springMVC框架开发经验，熟悉spring分层的意义以及对应代码的编写方式（controller，service，dao，entity，vo）
+Mybatis开发经验，熟悉xml编写sql的相关经验
+mysql数据库开发经验，熟悉表，字段，sql，数据库事务等
 ### 用法：
-1. 使用本框架需要使用idea2017以上版本
-2. idea必须下载lombok插件，可以参考https://jingyan.baidu.com/article/0a52e3f4e53ca1bf63ed725c.html
-3. 直接在项目上开自己的分支，并复制anjoy-component-sample为自己的项目，开始撸代码。或者你要fork整个项目到自己的repo中去也行。**绝对禁止直接在master主干上撸自己的代码或者将自己的代码合并到主干，违者删库踢出**
+使用本框架需要使用idea2017以上版本
+idea必须下载lombok插件，可以参考https://jingyan.baidu.com/article/0a52e3f4e53ca1bf63ed725c.html
+直接在项目上开自己的分支，并复制anjoy-component-sample为自己的项目，开始撸代码。或者你要fork整个项目到自己的repo中去也行。**绝对禁止直接在master主干上撸自己的代码或者将自己的代码合并到主干，违者删库踢出**
 
 mybatis-plus的用法可以参考SellerController或者BuyerController或者直接看官网：
 https://mybatis.plus/guide/crud-interface.html
