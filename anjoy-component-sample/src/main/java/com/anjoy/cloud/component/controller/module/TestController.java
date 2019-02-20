@@ -4,6 +4,7 @@ package com.anjoy.cloud.component.controller.module;
 import com.alibaba.fastjson.JSON;
 import com.anjoy.cloud.component.controller.base.BaseController;
 import com.anjoy.cloud.component.entity.Sms;
+import com.anjoy.cloud.component.redis.RedisCacheService;
 import com.anjoy.cloud.component.result.JsonResult;
 import com.anjoy.cloud.component.result.JsonResultCode;
 import com.anjoy.cloud.component.service.SmsService;
@@ -39,6 +40,9 @@ public class TestController extends BaseController {
     @Autowired
     SmsService smsService;
 
+    @Autowired
+    RedisCacheService redisCacheService;
+
     /**
      * 测试接口
      * @param request
@@ -49,6 +53,8 @@ public class TestController extends BaseController {
     @RequestMapping(value = "/01test", method = RequestMethod.POST)
     public JsonResult test(HttpServletRequest request, HttpServletResponse response, @ApiParam("TestVo")@RequestBody TestVo testVo)throws Exception {
         logger.info("输入的vo信息："+JSON.toJSONString(testVo));
+        redisCacheService.putObject("test999",testVo);
+        System.out.println(JSON.toJSONString((TestVo)redisCacheService.getObject("test999")));
         return new JsonResult(JsonResultCode.SUCCESS, "调用成功", testVo);
     }
 

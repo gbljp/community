@@ -1,11 +1,11 @@
 package com.anjoy.cloud.component.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisSentinelPool;
 
 import java.util.Set;
 
@@ -18,8 +18,11 @@ import java.util.Set;
 @Service
 public class RedisCacheService {
 
-    @Autowired
+    @Autowired(required=false)
     private JedisPool jedisPool;
+
+    @Autowired(required=false)
+    private JedisSentinelPool jedisSentinelPool;
 
     /**
      * 获取Jedis对象
@@ -27,12 +30,23 @@ public class RedisCacheService {
      */
     public synchronized  Jedis getJedis() {
         Jedis jedis = null;
-        if(jedisPool != null){
-            try{
-                if(jedis == null ){
+        //获取sentinel的pool
+        if (jedisSentinelPool != null) {
+            try {
+                if (jedis == null) {
+                    jedis = jedisSentinelPool.getResource();
+                }
+            } catch (Exception ex) {
+                returnBrokenResource(jedis);
+                throw ex;
+            }
+        }else if (jedisPool != null) {
+            //获取单实例的pool
+            try {
+                if (jedis == null) {
                     jedis = jedisPool.getResource();
                 }
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 returnBrokenResource(jedis);
                 throw ex;
             }
